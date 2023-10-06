@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="springback/src/main/java"/>
+	<classpathentry kind="src" path="springfront/src/main/java"/>
+	<classpathentry kind="lib" path="dd-java-agent.jar"/>
+	<classpathentry kind="lib" path="springback/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="springfront/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

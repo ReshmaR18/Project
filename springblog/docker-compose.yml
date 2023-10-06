@@ -1,0 +1,47 @@
+version: '3.5'
+
+services:
+
+  springfront:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Dockerfile.springfront
+    container_name: springfront
+    image: reshmar18/springfront-image:1.0
+    environment:
+      - JAVA_TOOL_OPTIONS=${JAVA_TOOL_OPTIONS_COMMON}
+      - URL=http://springback:8088
+    hostname: springfront
+    ports:
+      - "8081:8080"
+    volumes:
+      - /Users/resr/Downloads/dd-java-agent.jar
+    networks:
+      - app
+
+  springback:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Dockerfile.springback
+    container_name: springback
+    image: reshmar18/springback-image:1.0
+    environment:
+      - JAVA_TOOL_OPTIONS=${JAVA_TOOL_OPTIONS_COMMON}
+    hostname: springback
+    ports:
+      - "8085:8088"
+    volumes:
+      - /Users/resr/Downloads/dd-java-agent.jar
+    networks:
+      - app
+
+networks:
+  app:
+    external: false
+    driver: bridge
+    name: app
+
+# Define the common environment variable section
+x-common-environment:
+  environment:
+    - JAVA_TOOL_OPTIONS_COMMON=-javaagent:/dd-java-agent.jar -Ddd.agent.host=datadog -Ddd.env=dev -Ddd.version=12 -Ddd.trace.sample.rate=1 -Ddd.logs.injection=true -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -Ddd.tags=env:dev
